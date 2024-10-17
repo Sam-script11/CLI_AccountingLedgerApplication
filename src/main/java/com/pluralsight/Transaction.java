@@ -1,31 +1,35 @@
 package com.pluralsight;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Transaction extends Payment{
-    private ArrayList<Payment> payments;
+public class Transaction{
 
-    public Transaction(ArrayList<Payment> payments, String description, String vendor, double amount) {
-        this.payments = payments;
-        this.description = description;
-        this.vendor = vendor;
-        this.amount = amount;
-    }
-
-
-    public void addPayment(Payment payment){
-        payments.add(payment);
-    }
 
     private String description;
     private String vendor;
     private double amount;
 
+    private LocalDate date;
+    private LocalTime time;
+
+    public Transaction(ArrayList<Payment> payments, String description, String vendor, double amount) {
+        this.description = description;
+        this.vendor = vendor;
+        this.amount = amount;
+    }
+
     public Transaction(String description, String vendor, double amount) {
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
+    }
+
+    Transaction(){
+
     }
 
     public String getDescription() {
@@ -52,15 +56,32 @@ public class Transaction extends Payment{
         this.amount = amount;
     }
 
-    //    private String nameOnCard,cardNumber,expirationDate;
-//    private int cvv;
-//    private Date date;
-//    private Time time;
-//    private String description,vendor;
-//    private double amount;
+    public LocalDate getDate() {
+        return date;
+    }
 
-//    public void addTransaction(String description,double amount){
-//        Transaction transactions = new Transaction(new Date(),description,vendor,amount);
-//    }
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "description='" + description + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", time=" + time +
+                '}';
+    }
+
+    // descr + "|" + vendor + "|"
 }
