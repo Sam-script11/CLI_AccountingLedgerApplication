@@ -5,7 +5,7 @@ public class Payment {
     private int cvv;
     private double amountDue;
 
-    public Payment(String nameOnCard, String numbersOnCard, String expirationDate, int cvv, double amountDue) {
+    public Payment() {
         this.nameOnCard = nameOnCard;
         this.numbersOnCard = numbersOnCard;
         this.expirationDate = expirationDate;
