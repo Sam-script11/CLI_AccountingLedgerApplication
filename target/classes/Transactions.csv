@@ -1,15 +1,2 @@
-Transaction{date=2024-01-15, time=09:30:15, description=Salary, vendor=Employer, amount=1500.00}
-Transaction{date=2024-02-10, time=13:45:10, description=Freelance Project, vendor=Client A, amount=300.00}
-Transaction{date=2024-03-05, time=10:05:25, description=Birthday Gift, vendor=Friend, amount=200.00}
-Transaction{date=2024-04-01, time=16:20:35, description=Tax Refund, vendor=IRS, amount=1000.00}
-Transaction{date=2024-05-18, time=14:55:00, description=Salary, vendor=Employer, amount=1500.00}
-Transaction{date=2024-06-25, time=11:40:50, description=Bonus Payment, vendor=Employer, amount=500.00}
-Transaction{date=2024-07-30, time=17:15:45, description=Cash Deposit, vendor=ATM, amount=250.00}
-Transaction{date=2024-01-20, time=10:20:05, description=Rent, vendor=Landlord, amount=-750.00}
-Transaction{date=2024-02-12, time=18:30:40, description=Groceries, vendor=Supermarket, amount=-120.50}
-Transaction{date=2024-03-10, time=14:10:15, description=Electric Bill, vendor=Utility Company, amount=-65.75}
-Transaction{date=2024-04-22, time=12:50:25, description=Car Insurance, vendor=Insurance Provider, amount=-250.00}
-Transaction{date=2024-05-05, time=09:00:30, description=Gym Membership, vendor=Gym, amount=-45.00}
-Transaction{date=2024-06-15, time=16:35:50, description=Phone Bill, vendor=Phone Company, amount=-90.00}
-Transaction{date=2024-07-20, time=13:15:10, description=Internet Service, vendor=ISP, amount=-75.00}
-2024-10-17|23:20:03||apple Music|apple|$-11.99
+2024-10-18|11:59:47|paycheck|Chase capital|$900.0
+2024-10-18|12:00:37||Playstation 5|amazon|$-350.0
