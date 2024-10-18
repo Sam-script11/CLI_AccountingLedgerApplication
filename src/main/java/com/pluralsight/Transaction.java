@@ -9,6 +9,7 @@ import java.util.Date;
 public class Transaction{
 
 
+
     private String description;
     private String vendor;
     private double amount;
@@ -16,11 +17,6 @@ public class Transaction{
     private LocalDate date;
     private LocalTime time;
 
-    public Transaction(ArrayList<Payment> payments, String description, String vendor, double amount) {
-        this.description = description;
-        this.vendor = vendor;
-        this.amount = amount;
-    }
 
     public Transaction(String description, String vendor, double amount) {
         this.description = description;

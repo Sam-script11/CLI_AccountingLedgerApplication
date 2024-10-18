@@ -85,7 +85,7 @@ public class App {
                     System.out.print("Enter the vendor:");
                     String vendor = keyboard.nextLine();
 
-                    logger.write(formattedDate + "|" + formattedTime + "|" +description +"|"+vendor+"|"+ amount + "|" ); // add description today the csv string
+                    logger.write(formattedDate + "|" + formattedTime + "|" +description +"|"+vendor+"|"+ amount + "|$" ); // add description today the csv string
 
 
                     logger.newLine();
@@ -96,7 +96,6 @@ public class App {
                     newTransaction.setDescription(description);
                     newTransaction.setVendor(vendor);
                     newTransaction.setAmount(amount);
-                    //newTransaction.setDescription(descr)
 
                     allTransactions.add(newTransaction);
 
@@ -104,16 +103,14 @@ public class App {
 
                     System.out.print("Please enter the pay to the order of: ");
                     String payTo = keyboard.nextLine();
-                    System.out.print("Please enter the amount written on the check:");
+                    System.out.print("Please enter the amount written on the check: $");
                     Double amountOnCheck = Double.parseDouble(keyboard.nextLine());
 
-                 //   System.out.println(" Attempting to deposit... about to call depositFormat() method");
 
                     String input = depositFormat(payTo,amountOnCheck);
 
-                   // System.out.println(" after the dporit format method - before we call the logger.write()");
                     logger.write(today + input);
-                   // System.out.println(" After we called the logger.write method");
+
                     logger.newLine();
 
                 } else {
@@ -153,7 +150,7 @@ public class App {
             Double amountDue = Double.parseDouble(keyboard.nextLine());
                 //keyboard.nextLine();
 
-            logger.write(formattedDate + "|" + formattedTime + "|" +"|"+description+ "|"+ vendor+"|" +-amountDue); // add description today the csv string
+            logger.write(formattedDate + "|" + formattedTime + "|" +"|"+description+ "|"+ vendor+"|$" +-amountDue); // add description today the csv string
                 logger.newLine();
 
 
@@ -165,8 +162,7 @@ public class App {
 
     }
 
-        public static void displayLedger(){
-       // Scanner keyboard = new Scanner(System.in);
+        public static void displayLedger() {
 
             System.out.println("1) All");
             System.out.println("2) Deposits");
@@ -177,36 +173,84 @@ public class App {
 
             boolean ledgerMenu = true;
 
-            while (ledgerMenu) {
+            do{
+
 
                 int opt = keyboard.nextInt();
                 switch (opt) {
                     case 1:
-                        System.out.println(loadTransactions());
+                        allEntries();
                         break;
                     case 2:
-                      //  makeDeposit(); viewing all deposits
+                        deposits();
                         break;
                     case 3:
-                       // makePayment(); // viewing all payments
+                        payments();
                         break;
                     case 4:
-                        // create a method to display reports
-                        // this is going to be a smaller subMenu on the ledger menu
+                        displayReports();
                     case 5:
                         System.out.println("Returning to Home Screen");
                         ledgerMenu = false;
-                       return;
+                        break;
                     default:
                         System.out.println("invalid entry: ");
                 }
-
-
-            }
+            }while (ledgerMenu);
         }
 
+    public static void allEntries() {
+        // Loop through the already loaded 'allTransactions' list instead of reloading it
+        for (Transaction transaction : allTransactions) {
+            if (transaction != null) {
+                System.out.println(transaction);
+            }
+        }
+    }
 
-                //  method to take input from the user for transaction and formatted
+    public static void deposits() {
+        for (Transaction transaction : allTransactions) {
+            if (transaction != null && transaction.getAmount() > 0) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
+    public static void payments() {
+        for (Transaction transaction : allTransactions) {
+            if (transaction != null && transaction.getAmount() < 0) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
+
+    public static void displayReports() {
+        boolean report = true;
+        while (report) {
+            System.out.println("""
+                Reports
+                1) Month To Date
+                2) Previous Month
+                3) Year To Date
+                4) Previous Year
+                5) Search by Vendor
+                0) Back
+                Select an option:
+                """);
+
+//            String opt = keyboard.nextLine();
+//            boolean option;
+//            switch (option){
+                //case 1:
+
+            }
+            }
+
+        //}
+
+
+    //  method to take input from the user for transaction and formatted
     private static String inputFormat(String description, String vendor, double amount) {
         String dateTime = String.valueOf(LocalDateTime.now());
         return String.join("|", dateTime, description, vendor, String.format("%.2f", amount));
@@ -249,13 +293,11 @@ public class App {
                     String[] values = line.split("\\|");
 
                     Transaction itemFromFile = new Transaction();
-
                     itemFromFile.setDate(LocalDate.parse(values[0]));
                     itemFromFile.setTime(LocalTime.parse(values[1]));
-                    itemFromFile.setAmount(Double.parseDouble(values[2]));
-                    itemFromFile.setDescription(values[3]);
-                    itemFromFile.setVendor(values[4]);
-                    itemFromFile.setAmount(Double.parseDouble(values[5]));
+                    itemFromFile.setDescription(values[2]);  // Description is at index 2
+                    itemFromFile.setVendor(values[3]);       // Vendor is at index 3
+                    itemFromFile.setAmount(Double.parseDouble(values[4]));  // Amount is at index 4
 
 
                     //add it to the transaction arraylist
@@ -268,44 +310,8 @@ public class App {
 
         return transactions;
     }
-    static void helper(){
-      //  Scanner keyboard = new Scanner(System.in);
-        //this logic should be in it own method - not inside of this while loop
-        try {
-            //creating a root the the file named transaction.csv
-            FileWriter fw = new FileWriter(filePath, true);
-            BufferedWriter logger = new BufferedWriter(fw);
 
-            //creating a time stamp using a method already in java
-            LocalDateTime today = LocalDateTime.now();
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDate = today.format(fmt);
-
-            //creating and writing  a header to the file
-            String heading = ("Date|Time|Description|Vendor|amount");
-            logger.write(heading);
-            logger.newLine();
-            //taking user input to
-            System.out.print("What was the item you purchased? ");
-            String description = keyboard.nextLine();
-            System.out.print("Who was the vendor? ");
-            String vendor = keyboard.nextLine();
-            System.out.print("How much was the item? $-");
-            double amount = keyboard.nextDouble();
-            logger.newLine();
-
-            //formatting what is being written to the file
-            logger.write(formattedDate+"|"+description+"|"+vendor+"|"+amount);
-
-
-            logger.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     }
-
-
 
 
