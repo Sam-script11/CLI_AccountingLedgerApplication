@@ -1,4 +1,5 @@
 package com.pluralsight;
+import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,16 +21,28 @@ public class App {
     // which will be used throughout the code without creating new scanner (DRY)
 
     public static void main(String[] args) {
-        System.out.println("Welcome to SamScript Capital \n Building Wealth, One Script at a Time");
+        ImageIcon image = new ImageIcon("src/main/resources/download.jpg");
+        String [] homeButton = {"continue"};
+
+        String title = "Welcomes to SamScript Capital \n Building Wealth, One Script at a Time";
+        JOptionPane.showOptionDialog(null,title,"Title",
+                JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,image,homeButton,1); // formatting the home screen
+
+        String str = JOptionPane.showInputDialog("What is your name "); // used to create dialog box with the message on top of it
+        JOptionPane.showOptionDialog(null,"Hello "+str,"Greetings",JOptionPane.YES_NO_OPTION, // after user enters into the text box,
+                // it is assigned to str
+                JOptionPane.INFORMATION_MESSAGE,null,homeButton,1);
         //displaying all the deposits and transactions
        allTransactions = loadTransactions();
         //inside a loop to keep going if they want to access other cases
        // System.out.println(allTransactions);
         boolean homeMenu = true;
         while(homeMenu) {
+
             //creating different cases for the different commands
             // if user input is invalid, will print default
             displayCommands();
+
             int command = Integer.parseInt(keyboard.nextLine().trim());
             switch (command) {
 
@@ -211,21 +224,36 @@ public class App {
         }
 
     public static void allEntries() {
+        System.out.println("Date|Time|Description|Vendor|Amount");
+
         // Loop through the already loaded 'allTransactions' list instead of reloading it
         for (Transaction transaction : allTransactions) {
             if (transaction != null) {
-                System.out.println(transaction);
+                // Print the transaction details
+                System.out.printf("%s|%s|%s|%s|%.2f%n",
+                        transaction.getDate(),
+                        transaction.getTime(),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
             }
         }
     }
+
     //created to be called for the switch cases and to be called for the ledger menu
     public static void deposits() {
         // iterating through all the arrayList of transactions (for each), if transaction is not empty,
         // and amount is greater than 0, since deposits are positive
         // it will print the transaction
+        System.out.println("Date|Time|Description|vendor|Amount");
         for (Transaction transaction : allTransactions) {
             if (transaction != null && transaction.getAmount() > 0) {
-                System.out.println(transaction);
+                System.out.printf("%s|%s|%s|%s|%.2f%n",
+                        transaction.getDate(),
+                        transaction.getTime(),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
             }
         }
     }
@@ -234,7 +262,12 @@ public class App {
     public static void payments() {
         for (Transaction transaction : allTransactions) {
             if (transaction != null && transaction.getAmount() < 0) {
-                System.out.println(transaction);
+                System.out.printf("%s|%s|%s|%s|%.2f%n",
+                        transaction.getDate(),
+                        transaction.getTime(),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
             }
         }
     }
@@ -291,7 +324,12 @@ public class App {
         System.out.println("Transactions for vendor: " + vendorName);
         for (Transaction transaction : allTransactions) {
             if (transaction != null && transaction.getVendor().equalsIgnoreCase(vendorName)) {
-                System.out.println(transaction);
+                System.out.printf("%s|%s|%s|%s|%.2f%n",
+                        transaction.getDate(),
+                        transaction.getTime(),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
             }
         }
     }
@@ -382,7 +420,8 @@ public class App {
                     itemFromFile.setTime(LocalTime.parse(values[1]));
                     itemFromFile.setDescription(values[2]);  // Description is at index 2
                     itemFromFile.setVendor(values[3]);       // Vendor is at index 3
-                    itemFromFile.setAmount(Double.parseDouble(values[4]));  // Amount is at index 4
+                    itemFromFile.setAmount(Double.parseDouble(values[4].replace("$", "")));
+                    // Amount is at index 4
 
                     //add it to the transaction arraylist
                     transactions.add(itemFromFile);
